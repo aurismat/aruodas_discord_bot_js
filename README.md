@@ -1,12 +1,7 @@
 ### A simple Node.js run scraper for a real estate listings website [Aruodas.lt](https://aruodas.lt).
 
-Example config file is provided, but one MUST copy it as `./config.json`
+Example config file is provided, but one MUST copy it to `./config.json` before running.
 
 After that, app can be run with `npm run start`.
 
-Still a WIP.
-
-## TODO:
-
-* [ ] Implement Chromium parsing(need to bypass cURL and other bot detection measures);
-* [ ] Add Discord webhook message sends
+#### **NOTE**: the Aruodas URL *MUST* have `FOrder=AddDate` at its args set.
