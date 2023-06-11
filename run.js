@@ -1,11 +1,11 @@
 const { EmbedBuilder, WebhookClient } = require('discord.js');
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const cron = require('node-cron');
 
 const fs = require('fs');
 const path = require('path');
 
-const { webhook_url, embedColor, aruodasURL, listingsDir } = require('./config.json');
+const { webhook_url, embedColor, aruodasURL, listingsDir, chrome_path } = require('./config.json');
 
 // Check if the 'listings' directory exists, create it if necessary
 if (!fs.existsSync(listingsDir)) {
@@ -13,7 +13,7 @@ if (!fs.existsSync(listingsDir)) {
 }
 
 async function run_browser() {
-	const browser = await puppeteer.launch({ headless: 'new' });
+	const browser = await puppeteer.launch({ headless: 'new', executablePath: chrome_path });
 	const page = await browser.newPage();
 
 	await page.goto(aruodasURL);
@@ -79,7 +79,7 @@ function create_cache_file(hash) {
 	});
 }
 
-// schedule the task to run every minute
+// schedule the task to run every 15 minutes
 cron.schedule('*/15 * * * *', async () => {
 	run_browser().then(listing_list => {
 		listing_list.forEach(listing => {

@@ -1,5 +1,7 @@
 {
-    "webhook_url": "your_webhook_url_here",
+    "webhook_url": "your_discord_webhook_url_here",
     "embedColor": "#FF0000",
-    "aruodasURL": "https://www.aruodas.lt/butu-nuoma/kaune/?FQuartal=38%2C26%2C27%2C40%2C66111&FRoomNumMin=1&FRoomNumMax=2&FPriceMin=250&FRentOnlyRoom=1&FPriceMax=400&FOrder=AddDate"
+    "aruodasURL": "https://www.aruodas.lt/butu-nuoma/kaune/?FQuartal=38%2C26%2C27%2C40%2C66111&FRoomNumMin=1&FRoomNumMax=2&FPriceMin=250&FRentOnlyRoom=1&FPriceMax=400&FOrder=AddDate",
+    "listingsDir": "./listings",
+    "chrome_path": "/usr/bin/chromium"
 }
