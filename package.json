@@ -1,0 +1,17 @@
+{
+  "name": "aruodas_discord_bot_js",
+  "version": "1.0.0",
+  "description": "App designed to make Webhook messages to Discord channels for apartaments they're looking for.",
+  "main": "run.js",
+  "scripts": {
+    "start": "node run.js"
+  },
+  "author": "aurismat",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.42.0"
+  }
+}
