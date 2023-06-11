@@ -5,19 +5,12 @@ const cron = require('node-cron');
 const fs = require('fs');
 const path = require('path');
 
-const { webhook_url, embedColor, aruodasURL } = require('./config.json');
-const listingsDir = path.join(__dirname, 'listings');
+const { webhook_url, embedColor, aruodasURL, listingsDir } = require('./config.json');
 
 // Check if the 'listings' directory exists, create it if necessary
 if (!fs.existsSync(listingsDir)) {
 	fs.mkdirSync(listingsDir);
 }
-
-const filesList = fs.readdirSync(listingsDir);
-
-filesList.forEach(file => {
-	console.log(file);
-});
 
 async function run_browser() {
 	const browser = await puppeteer.launch({ headless: 'new' });
@@ -73,30 +66,31 @@ function sendWebHookText(listing_data) {
 }
 
 function check_file_exists(hash) {
-	filesList.forEach(file => {
-		if (file == hash) {
-			return true;
-		}
-	});
-	return false;
+	const files = fs.readdirSync(listingsDir);
+	return files.includes(hash);
 }
 
 function create_cache_file(hash) {
-	filesList.push(hash);
 	fs.writeFile(path.join(listingsDir, hash), '', (err) => {
 		if (err) {
 			console.error('Error writing file:', err);
+			return;
 		}
 	});
 }
 
 // schedule the task to run every minute
-cron.schedule('0,30 * * * *', async () => {
+cron.schedule('*/15 * * * *', async () => {
 	run_browser().then(listing_list => {
 		listing_list.forEach(listing => {
-			if (!check_file_exists(listing.hash)) {
+			if (check_file_exists(listing.hash)) {
+				return;
+			}
+			else {
+				console.log(`WRITE: hash '${listing.hash}'`);
 				create_cache_file(listing.hash);
 				sendWebHookText(listing.listing_data);
+				return;
 			}
 		});
 	});
